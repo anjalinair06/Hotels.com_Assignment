@@ -7,13 +7,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
+
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 
-public class HomePage extends BasePage{
+public class HomePage extends BasePage {
 
-    public HomePage(WebDriver driver){
+    public HomePage(WebDriver driver) {
         super(driver);
         getHomePage();
         PageFactory.initElements(driver, this);
@@ -40,38 +41,40 @@ public class HomePage extends BasePage{
     @FindBy(xpath = "//*[@id='hds-marquee']/div[3]/div[1]/div/form/div[5]/button")
     public WebElement search;
 
+    @FindBy(xpath = "//*[@id=\"managed-overlay\"]/button")
+    public WebElement popUpClose;
 
-    public WebElement getCity(String cityName){
-        int i=0;
+    public WebElement getCity(String cityName) {
+        int i = 0;
         List<WebElement> cityList = city.findElements(By.xpath("//table/tbody[1][@class='autosuggest-city']/tr"));
-        for(WebElement city : cityList){
-            String xpath = "//table/tbody[1][@class='autosuggest-city']/tr["+ ++i +"]/td/div[2]";
-            if(city.findElement(By.xpath(xpath)).getText().equals(cityName)){
+        for (WebElement city : cityList) {
+            String xpath = "//table/tbody[1][@class='autosuggest-city']/tr[" + ++i + "]/td/div[2]";
+            if (city.findElement(By.xpath(xpath)).getText().equals(cityName)) {
                 return city;
             }
         }
         throw new NoSuchElementException("No Matching City found");
     }
 
-    public void selectFromDropDown(WebElement webElement, String visibleText){
-        Select select =  new Select(webElement);
-        select.selectByVisibleText(visibleText);
-    }
-
-    public WebElement getCheckInDate(){
+    public WebElement getCheckInDate() {
         WebElement checkInDate = getDate(checkInDateTable.findElements(By.tagName("tr")));
-        if(checkInDate != null)
+        if (checkInDate != null)
             return checkInDate;
         else
             throw new NoSuchElementException("Unable to find the check in date");
     }
 
-    private WebElement getDate(List<WebElement> dateRows){
+    public void selectFromDropDown(WebElement webElement, String visibleText) {
+        Select select = new Select(webElement);
+        select.selectByVisibleText(visibleText);
+    }
+
+    private WebElement getDate(List<WebElement> dateRows) {
         int dayOfMonth = Calendar.getInstance(TimeZone.getDefault()).get(Calendar.DAY_OF_MONTH);
-        for(WebElement row : dateRows){
+        for (WebElement row : dateRows) {
             List<WebElement> dateCols = row.findElements(By.tagName("td"));
-            for(WebElement col : dateCols){
-                if(col.getText().equals(Integer.toString(dayOfMonth))){
+            for (WebElement col : dateCols) {
+                if (col.getText().equals(Integer.toString(dayOfMonth))) {
                     return col;
                 }
             }

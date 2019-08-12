@@ -1,49 +1,62 @@
 package com.hotels.test;
 
-import com.hotels.contants.Constants;
+import com.hotels.constants.Constants;
 import com.hotels.objectRepository.HomePage;
+import com.hotels.objectRepository.SearchResultsPage;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class SearchTest {
     private HomePage homePage;
+    private SearchResultsPage searchResultsPage;
     private WebDriver driver;
 
     @BeforeTest
-    public void navigateToHomePage(){
-        System.setProperty("webdriver.chrome.driver", "src\\main\\resources\\chromedriver.exe");
+    public void navigateToHomePage() {
+        System.setProperty("webdriver.chrome.driver", "src\\main\\resources\\chromedriver1.exe");
         driver = new ChromeDriver();
         homePage = new HomePage(driver);
         Assert.assertEquals(driver.getTitle(), "Hotels.com India", "Error in loading Home page");
-        Assert.assertTrue(homePage.destination.isDisplayed(),"Error in loading Home page");
+        Assert.assertTrue(homePage.destination.isDisplayed(), "Error in loading Home page");
     }
 
     @Test
     public void searchTest() throws Exception {
+        homePage.popUpClose.click();
         List<Map<String, String>> dataTable = Constants.TEST_DATA;
-        for(Map<String, String> row : dataTable){
+        for (Map<String, String> row : dataTable) {
             homePage.destination.sendKeys(row.get("DESTINATION"));
             TimeUnit.SECONDS.sleep(5);
             homePage.getCity(row.get("CITY")).click();
             homePage.checkInDatePicker.click();
-            for(int j=0; j<Integer.parseInt(row.get("CHECK_AVAILABILITY_AFTER")); j++) homePage.nextMonth.click();
+            for (int j = 0; j < Integer.parseInt(row.get("CHECK_AVAILABILITY_AFTER")); j++) homePage.nextMonth.click();
             homePage.getCheckInDate().click();
             homePage.rooms.click();
             homePage.selectFromDropDown(homePage.rooms, row.get("NO_OF_ROOMS_PERSONS"));
             TimeUnit.SECONDS.sleep(2);
             homePage.search.click();
+            WebDriverWait wait = new WebDriverWait(driver, 20);
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"tools-menu\"]/h1")));
+            searchResultsPage = new SearchResultsPage(driver);
+            searchResultsPage.getFilter(row.get("FILTER_OPTION")).click();
+            TimeUnit.SECONDS.sleep(20);
+            searchResultsPage.getPriceSort(row.get("SORT_OPTION")).click();
         }
     }
 
     @AfterTest
-    public void finalMethod(){
+    public void finalMethod() {
         driver.close();
     }
 }

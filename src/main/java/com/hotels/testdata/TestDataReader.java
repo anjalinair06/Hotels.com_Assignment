@@ -1,11 +1,12 @@
 package com.hotels.testdata;
 
-import com.hotels.contants.Constants;
+import com.hotels.constants.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -17,7 +18,8 @@ import java.util.Map;
 @Slf4j
 public class TestDataReader {
 
-    private TestDataReader(){}
+    private TestDataReader() {
+    }
 
     public static List<Map<String, String>> loadTestData() {
         FileInputStream testDataFile = null;
@@ -27,25 +29,25 @@ public class TestDataReader {
             testDataFile = new FileInputStream(Constants.TEST_DATA_WORKBOOK_PATH);
             XSSFWorkbook excelWorkbook = new XSSFWorkbook(testDataFile);
             XSSFSheet excelWorksheet = excelWorkbook.getSheet(Constants.TEST_DATA_WORKSHEET);
-            for(Cell cell : excelWorksheet.getRow(0))
+            for (Cell cell : excelWorksheet.getRow(0))
                 header.put(cell.getColumnIndex(), cell.getStringCellValue());
-            for (Row currentRow : excelWorksheet){
+            for (Row currentRow : excelWorksheet) {
                 Map<String, String> row = new HashMap<String, String>();
-                for (Cell currentCell : currentRow){
+                for (Cell currentCell : currentRow) {
                     String value = "";
-                    switch (currentCell.getCellTypeEnum()){
+                    switch (currentCell.getCellTypeEnum()) {
                         case STRING:
                             value = currentCell.getStringCellValue();
                             break;
                         case NUMERIC:
-                            value = Integer.toString((int)currentCell.getNumericCellValue());
+                            value = Integer.toString((int) currentCell.getNumericCellValue());
                             break;
                     }
-                    if(!header.get(currentCell.getColumnIndex()).equals(value)) {
+                    if (!header.get(currentCell.getColumnIndex()).equals(value)) {
                         row.put(header.get(currentCell.getColumnIndex()), value);
                     }
                 }
-                if(!row.isEmpty())
+                if (!row.isEmpty())
                     testData.add(row);
             }
         } catch (FileNotFoundException e) {
@@ -54,7 +56,7 @@ public class TestDataReader {
             log.error("Error while reading Test Data file", e);
         } finally {
             try {
-                if(testDataFile != null)
+                if (testDataFile != null)
                     testDataFile.close();
             } catch (IOException e) {
                 log.error("Error while closing Test Data file");
