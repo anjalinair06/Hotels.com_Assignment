@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="hotel-automation" target="1.5" />
+      <module name="hotel-automation" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>

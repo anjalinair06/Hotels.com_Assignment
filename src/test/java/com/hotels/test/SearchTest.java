@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -31,8 +30,8 @@ public class SearchTest {
         System.setProperty("webdriver.chrome.driver", "src\\main\\resources\\chromedriver1.exe");
         driver = new ChromeDriver();
         homePage = new HomePage(driver);
-        Assert.assertEquals(driver.getTitle(), "Hotels.com India", "Error in loading Home page");
-        Assert.assertTrue(homePage.destination.isDisplayed(), "Error in loading Home page");
+        Assert.assertEquals(driver.getTitle(), "Hotels.com India", "Error on loading Home page");
+        Assert.assertTrue(homePage.destination.isDisplayed(), "Error on loading Home page");
     }
 
     @Test
@@ -51,12 +50,12 @@ public class SearchTest {
             TimeUnit.SECONDS.sleep(2);
             homePage.search.click();
             WebDriverWait wait = new WebDriverWait(driver, 10);
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"tools-menu\"]/h1")));
             searchResultsPage = new SearchResultsPage(driver);
+            wait.until(ExpectedConditions.visibilityOf(searchResultsPage.searchResultHeader));
             searchResultsPage.getFilter(row.get("FILTER_OPTION")).click();
-            TimeUnit.SECONDS.sleep(10);
-            searchResultsPage.price.click();
+            TimeUnit.SECONDS.sleep(5);
             searchResultsPage.getPriceSort(row.get("SORT_OPTION")).click();
+            TimeUnit.SECONDS.sleep(5);
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Price (high to low)")));
             ExcelUtils.exportToCSV(searchResultsPage.getTopThree(), Constants.SAMPLE_CSV_FILE);
         }
