@@ -3,9 +3,12 @@ package com.hotels.test;
 import com.hotels.constants.Constants;
 import com.hotels.objectRepository.HomePage;
 import com.hotels.objectRepository.SearchResultsPage;
+import com.hotels.utils.ExcelUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -17,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public class SearchTest {
     private HomePage homePage;
     private SearchResultsPage searchResultsPage;
@@ -33,7 +37,7 @@ public class SearchTest {
 
     @Test
     public void searchTest() throws Exception {
-        homePage.popUpClose.click();
+        homePage.continueToHotelDotCom.click();
         List<Map<String, String>> dataTable = Constants.TEST_DATA;
         for (Map<String, String> row : dataTable) {
             homePage.destination.sendKeys(row.get("DESTINATION"));
@@ -46,12 +50,15 @@ public class SearchTest {
             homePage.selectFromDropDown(homePage.rooms, row.get("NO_OF_ROOMS_PERSONS"));
             TimeUnit.SECONDS.sleep(2);
             homePage.search.click();
-            WebDriverWait wait = new WebDriverWait(driver, 20);
+            WebDriverWait wait = new WebDriverWait(driver, 10);
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"tools-menu\"]/h1")));
             searchResultsPage = new SearchResultsPage(driver);
             searchResultsPage.getFilter(row.get("FILTER_OPTION")).click();
-            TimeUnit.SECONDS.sleep(20);
+            TimeUnit.SECONDS.sleep(10);
+            searchResultsPage.price.click();
             searchResultsPage.getPriceSort(row.get("SORT_OPTION")).click();
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Price (high to low)")));
+            ExcelUtils.exportToCSV(searchResultsPage.getTopThree(), Constants.SAMPLE_CSV_FILE);
         }
     }
 
