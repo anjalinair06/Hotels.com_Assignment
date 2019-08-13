@@ -14,38 +14,30 @@ import java.util.TimeZone;
 
 public class HomePage extends BasePage {
 
+    @FindBy(xpath = "//input[@id='qf-0q-destination']")
+    public WebElement destination;
+    @FindBy(xpath = "/html/body/div[6]/div[1]/div[2]/div[1]/button[2]")
+    public WebElement nextMonth;
+    @FindBy(xpath = "//*[@id='widget-query-label-1']")
+    public WebElement checkInDatePicker;
+    @FindBy(xpath = "//select[@id='qf-0q-compact-occupancy']")
+    public WebElement rooms;
+    @FindBy(xpath = "//*[@id='hds-marquee']/div[3]/div[1]/div/form/div[5]/button")
+    public WebElement search;
+    @FindBy(xpath = "//*[@id=''managed-overlay']/button")
+    public WebElement popUpClose;
+    @FindBy(xpath = "//*[@id='managed-overlay']/div/div/div[4]/div/div/div/div/a")
+    public WebElement continueToHotelDotCom;
+    @FindBy(xpath = "//table/tbody[1][@class='autosuggest-city']")
+    private WebElement city;
+    @FindBy(xpath = "/html/body/div[6]/div[1]/div[1]/div[2]/table/tbody")
+    private WebElement checkInDateTable;
+
     public HomePage(WebDriver driver) {
         super(driver);
         getHomePage();
         PageFactory.initElements(driver, this);
     }
-
-    @FindBy(xpath = "//input[@id='qf-0q-destination']")
-    public WebElement destination;
-
-    @FindBy(xpath = "//table/tbody[1][@class='autosuggest-city']")
-    private WebElement city;
-
-    @FindBy(xpath = "/html/body/div[6]/div[1]/div[2]/div[1]/button[2]")
-    public WebElement nextMonth;
-
-    @FindBy(xpath = "//*[@id='widget-query-label-1']")
-    public WebElement checkInDatePicker;
-
-    @FindBy(xpath = "/html/body/div[6]/div[1]/div[1]/div[2]/table/tbody")
-    private WebElement checkInDateTable;
-
-    @FindBy(xpath = "//select[@id='qf-0q-compact-occupancy']")
-    public WebElement rooms;
-
-    @FindBy(xpath = "//*[@id='hds-marquee']/div[3]/div[1]/div/form/div[5]/button")
-    public WebElement search;
-
-    @FindBy(xpath = "//*[@id=''managed-overlay']/button")
-    public WebElement popUpClose;
-
-    @FindBy(xpath = "//*[@id='managed-overlay']/div/div/div[4]/div/div/div/div/a")
-    public WebElement continueToHotelDotCom;
 
     public WebElement getCity(String cityName) {
         int i = 0;

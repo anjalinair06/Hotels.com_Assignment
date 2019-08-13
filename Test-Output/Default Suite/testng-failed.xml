@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Default Suite]">
+  <test name="hotel-automation(failed)">
+    <classes>
+      <class name="com.hotels.test.SearchTest">
+        <methods>
+          <include name="searchTest"/>
+          <include name="navigateToHomePage"/>
+          <include name="finalMethod"/>
+        </methods>
+      </class> <!-- com.hotels.test.SearchTest -->
+    </classes>
+  </test> <!-- hotel-automation(failed) -->
+</suite> <!-- Failed suite [Default Suite] -->
