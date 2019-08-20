@@ -1,4 +1,10 @@
 "HOTEL_NAME,PRICE"
+<<<<<<< HEAD
 "Taj West End,Rs36,900"
 "Smart Stay Service Apartment,Rs12,000"
 "Mint Propus,Rs11,427"
+=======
+"Mint Propus,Rs21,428"
+"The Ritz-Carlton, Bangalore,Rs16,000"
+"Smart Stay Service Apartment,Rs12,000"
+>>>>>>> b7f3b9f1a8f3198c7147c6bba04cfdd557aa40cc
