@@ -10,6 +10,7 @@ public class Constants {
     public static final String TEST_DATA_WORKSHEET = "InputData";
     public static final String SAMPLE_CSV_FILE = "src\\test\\resources\\TopThreeExpensiveHotels.csv";
     public static final List<Map<String, String>> TEST_DATA = TestDataReader.loadTestData();
+
     private Constants() {
     }
 }

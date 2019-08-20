@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class SearchResultsPage extends BasePage {
 
-    @FindBy(xpath = "//*[@id='tools-menu']/h1")
+    @FindBy(xpath = "//*[@id='search']/div[1]/div/h1")
     public WebElement searchResultHeader;
     @FindBy(xpath = "//*[@id='sort-submenu-price']")
     public WebElement priceHighToLow;

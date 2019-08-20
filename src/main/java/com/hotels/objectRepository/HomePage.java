@@ -24,7 +24,7 @@ public class HomePage extends BasePage {
     public WebElement rooms;
     @FindBy(xpath = "//*[@id='hds-marquee']/div[3]/div[1]/div/form/div[5]/button")
     public WebElement search;
-    @FindBy(xpath = "//*[@id=''managed-overlay']/button")
+    @FindBy(xpath = "//*[@id='managed-overlay']/button")
     public WebElement popUpClose;
     @FindBy(xpath = "//*[@id='managed-overlay']/div/div/div[4]/div/div/div/div/a")
     public WebElement continueToHotelDotCom;

@@ -47,15 +47,12 @@ public class SearchTest {
             homePage.getCheckInDate().click();
             homePage.rooms.click();
             homePage.selectFromDropDown(homePage.rooms, row.get("NO_OF_ROOMS_PERSONS"));
-            TimeUnit.SECONDS.sleep(2);
             homePage.search.click();
-            WebDriverWait wait = new WebDriverWait(driver, 10);
+            WebDriverWait wait = new WebDriverWait(driver, 5);
             searchResultsPage = new SearchResultsPage(driver);
             wait.until(ExpectedConditions.visibilityOf(searchResultsPage.searchResultHeader));
             searchResultsPage.getFilter(row.get("FILTER_OPTION")).click();
-            TimeUnit.SECONDS.sleep(5);
             searchResultsPage.getPriceSort(row.get("SORT_OPTION")).click();
-            TimeUnit.SECONDS.sleep(5);
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Price (high to low)")));
             ExcelUtils.exportToCSV(searchResultsPage.getTopThree(), Constants.SAMPLE_CSV_FILE);
         }
